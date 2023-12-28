@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+<model name="box_model_100">
+    <pose>0 0 0 0 0 0</pose>
+    <static>false</static>
+    <link name="link_100">
+
+      <collision name="collision_100">
+        <geometry>
+          <box>
+            <size>0.25 0.25 0.25</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <visual name="visual_100">
+        <geometry>
+          <box>
+            <size>0.25 0.25 0.25</size>
+          </box>
+        </geometry>
+      </visual>
+    
+        <collision name='aruco_collision_100'>
+        <pose>0 0 0 0 0 0</pose>
+            <geometry>
+                <box>
+                    <size>0.0001 0.15 0.15</size>
+                </box>
+            </geometry>
+        </collision>
+        <visual name='aruco_visual_100'>
+        <pose>0.125 0 0 0 0 0</pose>
+            <geometry>
+                <box>
+                    <size>0.0001 0.15 0.15</size>
+                </box>
+            </geometry>
+            <material>
+	    <script>
+            	<uri>model://aruco_marker_100/materials/scripts</uri>
+            	<uri>model://aruco_marker_100/materials/textures</uri>
+            	<name>Marker_100</name>
+	    </script>    
+            </material>            
+        </visual>
+    </link>
+    
+</model> 
+</sdf>
+            
+

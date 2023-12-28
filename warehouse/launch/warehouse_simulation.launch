@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- warehouse simulation environment -->
+  <env name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find warehouse_simulation)/models"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find warehouse_simulation)/models"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find warehouse_simulation)/worlds/warehouse.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="gui" value="true"/> 
+    <arg name="debug" value="false"/>
+  </include>
+
+  <arg name="ur5_x" default="0"/>
+  <arg name="ur5_y" default="0"/>
+  <arg name="ur5_z" default="0.8"/>
+  <arg name="ur5_yaw" default="-1.57"/>
+  
+  <arg name="ridgeback_x" default="-0.76"/>
+  <arg name="ridgeback_y" default="0.32"/>
+  <arg name="ridgeback_z" default="0.026"/>
+  <arg name="ridgeback_yaw" default="-1.57"/>
+  
+  <!--   ur5 -->
+  <group ns="ur5">
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur_description)/urdf/ur5_robot.urdf'"/>
+  <node name="spawn_ur5" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model ur5 -x $(arg ur5_x) -y $(arg ur5_y) -z $(arg ur5_z) -Y $(arg ur5_yaw)"/>
+  <include file="$(find ur5_moveit)/launch/ur5_bringup_moveit.launch"/> 
+  </group>
+
+   <!-- Spawn the ur5 robot model -->
+  <group ns="ridgeback">
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ridgeback_description)/urdf/ridgeback.urdf'"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="ridgeback" />
+  </node>
+  <node name="spawn_ridgeback" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model ridgeback -x $(arg ridgeback_x) -y $(arg ridgeback_y) -z $(arg ridgeback_z) -Y $(arg ridgeback_yaw)"/>
+  </group>
+
+</launch>
