@@ -1,2 +1,2 @@
-# warehouse_simulation
-This Repository for warehouse simulation with ROS, Moveit and Gazebo
+# Warehouse Automation
+This Repository contains for faciliating Warehouse Automation with ROS, Moveit and Gazebo
